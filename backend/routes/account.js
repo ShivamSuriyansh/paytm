@@ -29,7 +29,6 @@ const transferBody = zod.object({
 })
 
 router.post('/transfer',authMiddleware, async(req,res)=>{
-
     //converting this to transaction to maintain ACID properties
 
     const session = await mongoose.startSession();
@@ -73,6 +72,8 @@ router.post('/transfer',authMiddleware, async(req,res)=>{
     return res.status(400).json({
         msg: 'Invalid Account'
     });
+
 })
+
 
 module.exports = router;
