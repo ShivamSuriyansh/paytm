@@ -28,12 +28,16 @@ const transferBody = zod.object({
 })
 
 router.post('/transfer',authMiddleware, async(req,res)=>{
-    const {success} = transferBody.safeParse();
+
+    //converting this to transaction to maintain ACID properties
+
+    const {success} = transferBody.safeParse(req.body);
+    console.log('success',success);
     if(success){
-        const Account = await Account.findOne({
+        const acc = await Account.findOne({
             userId : req.body.to
         })
-        if(!Account){
+        if(!acc){
             res.status(400).json({
                 msg : "insufficient funds"
             })
@@ -55,7 +59,7 @@ router.post('/transfer',authMiddleware, async(req,res)=>{
             }
         })
 
-        res.json({
+        return res.json({
             msg : 'Transaction Successfull'
         })
     }
