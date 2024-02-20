@@ -3,7 +3,7 @@ const router = express.Router();
 const zod = require('zod');
 const {User,Account } = require('../db/UserSchema');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = require('../config');
+const {JWT_SECRET} = require('../config');
 const { authMiddleware } = require('../middleware/authMiddleware');
 const randomNum  = require('../utils/utility');
 
