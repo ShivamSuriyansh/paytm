@@ -1,6 +1,5 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = require('../config.js');
+const {JWT_SECRET} = require('../config');
 
 const authMiddleware = (req,res,next)=>{
     const authHeader = req.headers.authorization
@@ -15,9 +14,12 @@ const authMiddleware = (req,res,next)=>{
         if(decoded.userId){
             req.userId = decoded.userId;
         }
+        console.log('jwt: ',JWT_SECRET,decoded.userId);
         next();
     }catch(err){
-        return res.status(403).json({});
+        return res.status(403).json({
+            msg: 'Erorr'
+        });
     }
 }
 
