@@ -1,6 +1,7 @@
 
 import {useState,useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 
 
@@ -40,12 +41,20 @@ const Signup = () => {
     setPassword(e.target.value);
   }
 
-  const handleSignIn = ()=>{
-    const isValidEmail =/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  const handleSignIn = async ()=>{
+    const isValidEmail =/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     if(!email.match(isValidEmail)){
       alert('Please Enter a valid Email!!');
       return;
     }
+    const response = await axios.post('http://localhost:4000/api/v1/user/signup',{
+      "username" : email,
+      "firstname" : name,
+      "lastname" : lastName,
+      "password" : password
+    })
+    console.log(response.data);
+    localStorage.setItem("token",response.data.token);
     navigate('/dashboard');
   }
   

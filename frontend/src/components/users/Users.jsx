@@ -7,12 +7,17 @@ const Users = ({user,index}) => {
   return (  
     <div className='flex justify-between items-center gap-4'>
         <div className='flex justify-start items-center gap-[2  .2rem]'>
-            <section className='icon'>
-                <div className=' bg-slate-300 rounded-full p-4 w-fit'>U{index}</div>
+
+        
+            <section className='icon p-2 flex justify-center items-center'>
+                <div className=" bg-green-400 h-[3rem] w-[3rem] rounded-full flex justify-center items-center">
+                    <div className=' bg-slate-300 rounded-full p-4 w-fit'>
+                        <span className="  font-semibold">U{index}</span>
+                    </div>
+                </div>
             </section>
             <section className='name'>
-                <span>{user.username}</span>
-                <span>{user.balance}</span>
+                <span>{user.firstName} {user.lastName}</span>
             </section>
         </div>
         <div >

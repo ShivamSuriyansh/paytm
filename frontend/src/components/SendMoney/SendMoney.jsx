@@ -16,7 +16,7 @@ const SendMoney = () => {
       <div className=" p-3 flex flex-col gap-2">
         <label htmlFor="passowrd" className=' font-bold'>Transfer funds: </label>
         <input className="mt-1 p-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-full" type="password"  id='password'/>
-        <button className=' font-semibold bg-green-500 text-white p-2 w-full rounded-md hover:bg-green-700' >Initiate Funds</button>
+        <button className=' font-semibold bg-green-500 text-white p-2 w-full rounded-md hover:bg-green-700' >Initiate Transfer</button>
       </div>
     </div>
   </div>

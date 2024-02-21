@@ -1,25 +1,33 @@
+import { useEffect, useState } from "react"
 import Users from "../users/Users"
-
-const USERS = [
-  {
-  username: 'user 1',
-  balance: '1200'
-},
-  {
-  username: 'user 2',
-  balance: '1400'
-},
-  {
-  username: 'user 3',
-  balance: '3200'
-},
-  {
-  username: 'user 4',
-  balance: '5321'
-},
-]
+import axios from "axios";
 
 const Dashboard = () => {
+  const [users,setUsers] = useState([]);
+  const [filter , setFilter] = useState('');
+  const [balance , setBalance] = useState('');
+
+  useEffect(()=>{
+    const users =axios.get('http://localhost:4000/api/v1/user/bulk?filter='+filter)
+    .then(res=>{
+      setUsers(res.data.user);
+    })
+
+    const currentBalance = axios.get('http://localhost:4000/api/v1/account/balance',{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }
+    })
+    .then(res=>{
+      setBalance(res.data.balance);
+    })
+    console.log('Users: ',users,'Balance: ',currentBalance);
+  },[filter,balance]);
+
+  const handleFilter = (e)=>{
+    setFilter(e.target.value);
+  }
+  
   return (
     <div className="container px-[10rem] py-[2.5rem]">  
       <section className="header border-b-2 py-4">
@@ -33,19 +41,18 @@ const Dashboard = () => {
       </section>
       <section className="subheader mt-8 mb-10">
         <div className="flex flex-cols font-bold text-xl gap-3">
-          <span className=" font-bold">Your Balance: </span>
-          <span>$5000</span>
+          <span className=" font-bold">Your Balance: {balance} </span>
         </div>
       </section>
       <section className="users-filter">
         <div className=" font-bold flex flex-col justify-center gap-8">
           <span className="text-2xl ">USERS</span>
-          <input type="text" className=" border rounded-md border-slate-400 p-2  " placeholder="Search users" />
+          <input type="text" className=" border rounded-md border-slate-400 p-2  " placeholder="Search users" value={filter} onChange={handleFilter}/>
         </div>
       </section>
       <section className="users-list">
         {/* api call needed */}
-        {USERS.map((u,i)=>(
+        {users.map((u,i)=>(
           <Users key={i} user={u} index={i}/>
         ))}
       </section>

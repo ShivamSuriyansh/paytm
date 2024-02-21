@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
@@ -8,8 +9,7 @@ const Signin = () => {
 
   useEffect(()=>{
     let timer = setTimeout(()=>{
-      console.log('credentials username: ',username);
-      console.log('credentials password: ',password);
+      
     },1000);
 
     return ()=>{
@@ -27,11 +27,20 @@ const Signin = () => {
   const navigate= useNavigate();
 
   const handleSignin = ()=> {
-    const isValidEmail =/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    const isValidEmail =/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     if(!username.match(isValidEmail)){
       alert('Please Enter a valid Email!!');
       return;
     }
+    const token = localStorage.getItem('token');
+    console.log('token: ',token);
+    axios.post('http://localhost:4000/api/v1/user/signin', {
+      username: username,
+      password: password,
+    }).then(res=>{
+      localStorage.setItem('token',res.data.token);
+    })
+
     navigate('/dashboard');
   }
   
@@ -46,7 +55,7 @@ const Signin = () => {
 
         <section className="body p-2 flex flex-col gap-2 ">
           <div className='flex flex-col gap-1 justify-center items-start'>
-            <label htmlFor="FirstName" className=' font-bold'>Username: </label>
+            <label htmlFor="FirstName" className=' font-bold'>sername: </label>
             <input className="mt-1 p-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-full"  value={username} type="text" onChange={handleUsername} placeholder="John" id='FirstName'/>
           </div>
           <div className='flex flex-col gap-1 justify-center items-start'>
