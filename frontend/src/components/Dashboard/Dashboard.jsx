@@ -8,12 +8,12 @@ const Dashboard = () => {
   const [balance , setBalance] = useState('');
 
   useEffect(()=>{
-    const users =axios.get('http://localhost:4000/api/v1/user/bulk?filter='+filter)
+    axios.get('http://localhost:4000/api/v1/user/bulk?filter='+filter)
     .then(res=>{
       setUsers(res.data.user);
     })
 
-    const currentBalance = axios.get('http://localhost:4000/api/v1/account/balance',{
+    axios.get('http://localhost:4000/api/v1/account/balance',{
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }
