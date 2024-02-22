@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom"
 
 const Users = ({user,index}) => {
     const navigate = useNavigate();
+
+    const handleTransfer = ()=>{
+        console.log(user._id);
+        navigate('/send?id='+user._id+'&name='+user.firstName+" "+user.lastName);
+    }
+
   return (  
     <div className='flex justify-between items-center gap-4'>
         <div className='flex justify-start items-center gap-[2  .2rem]'>
@@ -21,7 +27,7 @@ const Users = ({user,index}) => {
             </section>
         </div>
         <div >
-            <section className='button bg-black text-white rounded-lg p-2' onClick={()=>navigate('/send')}>Send Money</section>
+            <section className='button bg-black text-white rounded-lg p-2' onClick={handleTransfer}>Send Money</section>
         </div>
     </div>
   )

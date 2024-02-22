@@ -26,20 +26,23 @@ const Signin = () => {
 
   const navigate= useNavigate();
 
-  const handleSignin = ()=> {
+  const handleSignin = async ()=> {
     const isValidEmail =/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     if(!username.match(isValidEmail)){
       alert('Please Enter a valid Email!!');
       return;
     }
-    const token = localStorage.getItem('token');
-    console.log('token: ',token);
-    axios.post('http://localhost:4000/api/v1/user/signin', {
+    const res =await axios.post('http://localhost:4000/api/v1/user/signin', {
       username: username,
       password: password,
-    }).then(res=>{
-      localStorage.setItem('token',res.data.token);
-    })
+    });
+    localStorage.setItem('token',res.data.token);
+    console.log('token: ',localStorage.getItem('token'));
+  
+
+    const currUsers = await axios.get(`http://localhost:4000/api/v1/user/bulk?filter=${username}`);
+    console.log('#########: res: ',currUsers.data);
+    localStorage.setItem('user',JSON.stringify(currUsers.data.user[0]));
 
     navigate('/dashboard');
   }

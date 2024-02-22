@@ -84,7 +84,8 @@ router.post('/signin' , async (req,res)=>{
             userId: user._id,
         },JWT_SECRET);
         res.json({
-            token : token
+            token : token,
+            user : user
         })
         return;
     }
@@ -151,6 +152,10 @@ router.get('/bulk', async (req,res)=>{
                 },
                 {
                     lastname : {
+                        "$regex" : filter
+                    }
+                },{
+                    username : {
                         "$regex" : filter
                     }
                 },

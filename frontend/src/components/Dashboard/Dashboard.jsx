@@ -21,7 +21,6 @@ const Dashboard = () => {
     .then(res=>{
       setBalance(res.data.balance);
     })
-    console.log('Users: ',users,'Balance: ',currentBalance);
   },[filter,balance]);
 
   const handleFilter = (e)=>{
@@ -34,7 +33,7 @@ const Dashboard = () => {
         <div className="flex justify-between ">
           <h1 className=" text-2xl font-bold ">Payments App</h1>
           <div className="user-profile flex gap-2 justify-center items-center  font-semibold ">
-            <span>Hello, User</span>
+            <span>Hello, {JSON.parse(localStorage.getItem('user')).firstName}</span>
             <span className=" rounded-full p-4 h-0.5 w-0.5 bg-slate-200 cursor-pointer"></span>
           </div>
         </div>
